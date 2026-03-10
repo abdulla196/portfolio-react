@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { 
   Github, 
   Linkedin, 
@@ -16,37 +15,27 @@ import {
 } from 'lucide-react';
 import { CV_DATA } from './constants';
 
-const SectionHeader = ({ icon: Icon, title }: { icon: React.ElementType, title: string }) => (
-  <div className="flex items-center gap-3 mb-8">
-    <div className="p-2 bg-zinc-900 rounded-lg border border-zinc-800">
-      <Icon className="w-5 h-5 text-emerald-500" />
-    </div>
-    <h2 className="text-xl font-mono font-bold tracking-tight text-zinc-100 uppercase italic">
-      {title}
-    </h2>
-    <div className="h-[1px] flex-grow bg-zinc-800 ml-4" />
-  </div>
-);
-
 export default function App() {
+  const currentYear = new Date().getFullYear();
+
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-zinc-400 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
       {/* Grid Background Effect */}
-      <div className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
       
       <main className="relative max-w-5xl mx-auto px-6 py-12 lg:py-24">
         
         {/* Header / Hero Section */}
         <header className="mb-20">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div>
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
               <div>
-                <h1 className="text-4xl md:text-6xl font-bold text-zinc-100 tracking-tighter mb-2">
-                  {CV_DATA.name.toUpperCase()}
+                <h1 className="text-4xl md:text-6xl font-bold text-zinc-100 tracking-tighter mb-2 uppercase">
+                  {CV_DATA.name}
                 </h1>
                 <div className="flex items-center gap-3 text-emerald-500 font-mono text-sm md:text-base">
                   <Terminal className="w-4 h-4" />
@@ -89,7 +78,7 @@ export default function App() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
@@ -99,17 +88,20 @@ export default function App() {
             
             {/* Experience Section */}
             <section id="experience">
-              <SectionHeader icon={Briefcase} title="Work Experience" />
+              <div className="flex items-center gap-3 mb-8">
+                <div className="p-2 bg-zinc-900 rounded-lg border border-zinc-800">
+                  <Briefcase className="w-5 h-5 text-emerald-500" />
+                </div>
+                <h2 className="text-xl font-mono font-bold tracking-tight text-zinc-100 uppercase italic">
+                  Work Experience
+                </h2>
+                <div className="h-[1px] flex-grow bg-zinc-800 ml-4"></div>
+              </div>
+
               <div className="space-y-12">
                 {CV_DATA.experience.map((exp, idx) => (
-                  <motion.div 
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    className="relative pl-8 border-l border-zinc-800 group"
-                  >
-                    <div className="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-zinc-800 group-hover:bg-emerald-500 transition-colors" />
+                  <div key={idx} className="relative pl-8 border-l border-zinc-800 group">
+                    <div className="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-zinc-800 group-hover:bg-emerald-500 transition-colors"></div>
                     
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
                       <div>
@@ -134,20 +126,24 @@ export default function App() {
                         </li>
                       ))}
                     </ul>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </section>
 
             {/* Education Section */}
             <section id="education">
-              <SectionHeader icon={GraduationCap} title="Education" />
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="p-6 border border-zinc-800 rounded-xl bg-zinc-900/30"
-              >
+              <div className="flex items-center gap-3 mb-8">
+                <div className="p-2 bg-zinc-900 rounded-lg border border-zinc-800">
+                  <GraduationCap className="w-5 h-5 text-emerald-500" />
+                </div>
+                <h2 className="text-xl font-mono font-bold tracking-tight text-zinc-100 uppercase italic">
+                  Education
+                </h2>
+                <div className="h-[1px] flex-grow bg-zinc-800 ml-4"></div>
+              </div>
+
+              <div className="p-6 border border-zinc-800 rounded-xl bg-zinc-900/30">
                 <div className="flex flex-col md:flex-row justify-between gap-4">
                   <div>
                     <h3 className="text-lg font-bold text-zinc-100">{CV_DATA.education.school}</h3>
@@ -159,7 +155,7 @@ export default function App() {
                     <p className="text-zinc-600 mt-1">{CV_DATA.education.location}</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </section>
           </div>
 
@@ -168,13 +164,19 @@ export default function App() {
             
             {/* Skills Section */}
             <section id="skills" className="sticky top-12">
-              <SectionHeader icon={Code2} title="Tech Stack" />
+              <div className="flex items-center gap-3 mb-8">
+                <div className="p-2 bg-zinc-900 rounded-lg border border-zinc-800">
+                  <Code2 className="w-5 h-5 text-emerald-500" />
+                </div>
+                <h2 className="text-xl font-mono font-bold tracking-tight text-zinc-100 uppercase italic">
+                  Tech Stack
+                </h2>
+                <div className="h-[1px] flex-grow bg-zinc-800 ml-4"></div>
+              </div>
+
               <div className="flex flex-wrap gap-2">
                 {CV_DATA.skills.map((skill, idx) => (
-                  <span 
-                    key={idx} 
-                    className="px-3 py-1 text-xs font-mono bg-zinc-900 text-zinc-400 border border-zinc-800 rounded-md hover:border-emerald-500/50 hover:text-emerald-400 transition-colors cursor-default"
-                  >
+                  <span key={idx} className="px-3 py-1 text-xs font-mono bg-zinc-900 text-zinc-400 border border-zinc-800 rounded-md hover:border-emerald-500/50 hover:text-emerald-400 transition-colors cursor-default">
                     {skill}
                   </span>
                 ))}
@@ -188,19 +190,13 @@ export default function App() {
                 
                 <div className="space-y-2">
                   <h4 className="text-xs font-mono uppercase tracking-widest text-zinc-500">Contact</h4>
-                  <a 
-                    href={`mailto:${CV_DATA.email}`}
-                    className="flex items-center gap-2 text-sm text-emerald-500 hover:underline"
-                  >
+                  <a href={`mailto:${CV_DATA.email}`} className="flex items-center gap-2 text-sm text-emerald-500 hover:underline">
                     <Mail className="w-4 h-4" />
                     {CV_DATA.email}
                   </a>
                 </div>
 
-                <button 
-                  onClick={() => window.print()}
-                  className="w-full py-3 px-4 bg-zinc-100 text-zinc-900 font-bold rounded-lg hover:bg-emerald-500 hover:text-white transition-all flex items-center justify-center gap-2 text-sm"
-                >
+                <button onClick={handlePrint} className="w-full py-3 px-4 bg-zinc-100 text-zinc-900 font-bold rounded-lg hover:bg-emerald-500 hover:text-white transition-all flex items-center justify-center gap-2 text-sm">
                   <ExternalLink className="w-4 h-4" />
                   Download Resume (PDF)
                 </button>
@@ -212,7 +208,7 @@ export default function App() {
 
         {/* Footer */}
         <footer className="mt-32 pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6 text-xs font-mono text-zinc-600">
-          <p>© {new Date().getFullYear()} ABDULLAH AMR MOHAMED. BUILT WITH REACT & TAILWIND.</p>
+          <p>© {currentYear} ABDULLAH AMR MOHAMED. BUILT WITH REACT & TAILWIND.</p>
           <div className="flex gap-6">
             <a href={CV_DATA.github} className="hover:text-emerald-500 transition-colors">GITHUB</a>
             <a href={CV_DATA.linkedin} className="hover:text-emerald-500 transition-colors">LINKEDIN</a>
